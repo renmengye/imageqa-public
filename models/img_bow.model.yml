@@ -1,0 +1,74 @@
+name: 'bow'
+costFn: 'crossEntIdx'
+decisionFn: 'argmax'
+stages:
+    - 'imgSel'
+    - 'imgFeat'
+    - 'txtSel'
+    - 'txtUnfold'
+    - 'txtDict'
+    - 'txtFold'
+    - 'bow'
+    - 'softmax'
+outputs: 'softmax'
+specs:
+    - name: 'imgSel'
+      type: 'selector'
+      inputs: 'input'
+      start: 0
+      end: 1
+      axis: 1
+    - name: 'txtSel'
+      type: 'selector'
+      inputs: 'input'
+      start: 1
+      end: 56
+      axis: 1
+    - name: 'imgFeat'
+      type: 'lut'
+      inputs: 'imgSel'
+      inputDim: 123288
+      outputDim: 4096
+      initWeights: '../data/hidden_oxford_mscoco.h5'
+      sparse: true
+      format: 'h5'
+      h5key: 'hidden7'
+      learningRate: 0.0
+      outputdEdX: false
+    - name: 'txtUnfold'
+      type: 'timeUnfold'
+      inputs: 'txtSel'
+      outputdEdX: false
+    - name: 'txtDict'
+      type: 'lut'
+      inputs: 'txtUnfold'
+      intConversion: true
+      inputDim: 9738
+      outputDim: 500
+      initRange: 1.0
+      initSeed: 2
+      learningRate: 0.8
+      momentum: 0.9
+      gradientClip: 0.1
+      weightClip: 1000.0
+    - name: 'txtFold'
+      type: 'timeFold'
+      inputs: 'txtDict'
+      timespan: 55
+    - name: 'bow'
+      type: 'sum2'
+      inputs: 'txtFold'
+      outputDim: 500
+    - name: 'softmax'
+      type: 'map'
+      inputs: 'bow, imgFeat'
+      activeFn: 'softmax'
+      outputDim: 431
+      initRange: 0.01
+      initSeed: 7
+      learningRate: 0.01
+      learningRateAnnealConst: 0.0
+      momentum: 0.9
+      gradientClip: 0.1
+      weightClip: 15.0
+      weightRegConst: 0.00005

@@ -1,0 +1,15 @@
+numEpoch: 2000
+heldOutRatio: 0.1
+xvalidNo: 0
+needValid: true
+batchSize: 100
+shuffle: true
+writeRecord: true
+saveModel: true
+plotFigs: true
+calcError: true
+stopCost: 0.01
+progress: true
+patience: 10
+criterion: loss
+sendEmail: true
