@@ -49,7 +49,7 @@ def readFlags():
     for i, flag in enumerate(sys.argv):
         if flag == '-n' or flag == '-name':
             params['name'] = sys.argv[i + 1]
-        elif flag == '-o' or flag == '-out':
+        elif flag == '-o' or flag == '-output':
             params['outputFolder'] = sys.argv[i + 1]
         elif flag == '-d' or flag == '-data':
             dataFolder = sys.argv[i + 1]
