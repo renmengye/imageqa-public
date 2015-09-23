@@ -66,9 +66,9 @@ specs:
     - name: 'imgFeatNorm'
       type: 'normalize'
       inputs: 'imgFeat'
-      mean: '../data/cocoqa-full/hidden_oxford_mscoco.h5'
+      mean: '../data/hidden_oxford_mscoco.h5'
       meanKey: 'hidden7_mean'
-      std: '../data/cocoqa-full/hidden_oxford_mscoco.h5'
+      std: '../data/hidden_oxford_mscoco.h5'
       stdKey: 'hidden7_std'
       format: 'h5'
       outputDim: 4096
