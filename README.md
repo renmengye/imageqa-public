@@ -67,7 +67,9 @@ for empty word, which has a zero word embedding vector.
 
 ## Training
 
-After setting up the dataset, call the following command to train a model. 
+After setting up the dataset, call the following command to train a model. For
+IMG+BOW, {model file} is *models/img_bow.model.yml*. VIS+LSTM and 2-VIS+BLSTM 
+can also be found in the *models* folder.
 
 ```
 cd src
