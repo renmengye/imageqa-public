@@ -1,6 +1,6 @@
 # Image QA
-This repository contains code to reproduce results for paper Exploring Models 
-and Data for Image Question Answering. Mengye Ren, Ryan Kiros, Richard Zemel. 
+This repository contains code to reproduce results in paper *Exploring Models 
+and Data for Image Question Answering*. Mengye Ren, Ryan Kiros, Richard Zemel. 
 NIPS 2015 (to appear).
 
 ## Rendered results
@@ -33,13 +33,15 @@ The repository contains the following folders:
 
 ### Data files
 Please download the following files from my server:
-Image features from VGG-19
-* http://www.cs.toronto.edu/~mren/imageqa/data/hidden_oxford_mscoco.h5 
-(about 1.1G)
-COCO-QA dataset encoded
-* http://www.cs.toronto.edu/~mren/imageqa/data/cocoqa.zip (about 5.4M)
-After downloading the files, please place 'hidden_oxford_mscoco.h5' inside 
-'data' folder, extract 'cocoqa' folder inside 'data'.
+* Image features from VGG-19
+  * http://www.cs.toronto.edu/~mren/imageqa/data/hidden_oxford_mscoco.h5 
+  * about 1.1G
+* Encoded COCO-QA dataset
+  * http://www.cs.toronto.edu/~mren/imageqa/data/cocoqa.zip
+  * about 5.4M
+
+After downloading the files, please place *hidden_oxford_mscoco.h5* inside 
+*data* folder, extract *cocoqa* folder inside *data*.
 
 Now your data folder should contain the following files:
 * *hidden_oxford_mscoco.h5* - the last hidden layer activation from the VGG-19
@@ -110,7 +112,7 @@ bias.
 For LSTM weights, the weight for the entire LSTM unit is reshaped into one 
 matrix, 
 
-W = [W_I, W_F, W_Z, W_O]^T. 
+* W = [W_I, W_F, W_Z, W_O]^T. 
 
 W_I is for the input gate, W_F is for the 
 forget gate, W_Z is for the input transformation, and W_O is for the output 
