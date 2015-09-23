@@ -108,11 +108,16 @@ other is the softmax weights. The softmax weights have the last row as the
 bias.
 
 For LSTM weights, the weight for the entire LSTM unit is reshaped into one 
-matrix, W = [W_I, W_F, W_Z, W_O]^T. W_I is for the input gate, W_F is for the 
+matrix, 
+
+W = [W_I, W_F, W_Z, W_O]^T. 
+
+W_I is for the input gate, W_F is for the 
 forget gate, W_Z is for the input transformation, and W_O is for the output 
 gate. The weights for each W has the last row as the bias, 
 i.e. (InDim + 1) x OutDim.
-W_I = [W_XI, W_HI, W_CI, b_I]^T
-W_F = [W_XF, W_HF, W_CF, b_F]^T
-W_Z = [W_XZ, W_HZ, b_Z]^T
-W_O = [W_XO, W_HO, W_CO, b_O]^T
+
+* W_I = [W_XI, W_HI, W_CI, b_I]^T
+* W_F = [W_XF, W_HF, W_CF, b_F]^T
+* W_Z = [W_XZ, W_HZ, b_Z]^T
+* W_O = [W_XO, W_HO, W_CO, b_O]^T

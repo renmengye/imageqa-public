@@ -1,4 +1,4 @@
-name: 'bow'
+name: 'img_bow'
 costFn: 'crossEntIdx'
 decisionFn: 'argmax'
 stages:

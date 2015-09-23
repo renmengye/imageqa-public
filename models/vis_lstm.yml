@@ -1,0 +1,131 @@
+name: 'vis_lstm'
+costFn: 'crossEntIdx'
+decisionFn: 'argmax'
+stages:
+    - 'imgSel'
+    - 'imgUnfold'
+    - 'imgFeat'
+    - 'imgFeatNorm'
+    - 'imgMap'
+    - 'imgFold'
+    - 'txtSel'
+    - 'txtUnfold'
+    - 'txtDict'
+    - 'txtFold'
+    - 'concat'
+    - 'dropout'
+    - 'lstm'
+    - 'softmax'
+outputs: 'softmax'
+specs:
+    - name: 'imgSel'
+      type: 'selector'
+      inputs: 'input'
+      start: 0
+      end: 1
+      axis: 1
+    - name: 'txtSel'
+      type: 'selector'
+      inputs: 'input'
+      start: 1
+      end: 56
+      axis: 1
+    - name: 'imgUnfold'
+      type: 'timeUnfold'
+      inputs: 'imgSel'
+    - name: 'imgFeat'
+      type: 'lut'
+      inputs: 'imgUnfold'
+      inputDim: 123288
+      outputDim: 4096
+      initWeights: '../data/hidden_oxford_mscoco.h5'
+      sparse: true
+      format: 'h5'
+      h5key: 'hidden7'
+      learningRate: 0.0
+      outputdEdX: false
+    - name: 'imgFeatNorm'
+      type: 'normalize'
+      inputs: 'imgFeat'
+      mean: '../data/hidden_oxford_mscoco.h5'
+      meanKey: 'hidden7_mean'
+      std: '../data/hidden_oxford_mscoco.h5'
+      stdKey: 'hidden7_std'
+      format: 'h5'
+      outputDim: 4096
+    - name: 'imgMap'
+      type: 'map'
+      inputs: 'imgFeatNorm'
+      activeFn: 'identity'
+      bias: false
+      outputDim: 500
+      initRange: 0.05
+      initSeed: 1
+      learningRate: 0.8
+      momentum: 0.9
+      gradientClip: 0.1
+      weightClip: 100.0
+      outputdEdX: false
+    - name: 'imgFold'
+      type: 'timeFold'
+      inputs: 'imgMap'
+      timespan: 1
+    - name: 'txtUnfold'
+      type: 'timeUnfold'
+      inputs: 'txtSel'
+    - name: 'txtDict'
+      type: 'lut'
+      intConversion: true
+      inputs: 'txtUnfold'
+      inputDim: 9738
+      outputDim: 500
+      initRange: 1.0
+      initSeed: 2
+      learningRate: 0.8
+      momentum: 0.9
+      gradientClip: 0.1
+      weightClip: 1000.0
+      outputdEdX: false
+    - name: 'txtFold'
+      type: 'timeFold'
+      inputs: 'txtDict'
+      timespan: 55
+    - name: 'concat'
+      type: 'concat'
+      inputs: 'imgFold, txtFold'
+      axis: 1
+    - name: 'dropout'
+      type: 'dropout'
+      inputs: 'concat'
+      dropoutRate: 0.2
+      initSeed: 3
+      outputDim: 500
+    - name: 'lstm'
+      type: 'lstm'
+      inputs: 'dropout'
+      inputDim: 500
+      outputDim: 300
+      timespan: 56
+      initRange: 0.1
+      initSeed: 4
+      cutOffZeroEnd: true
+      multiErr: false
+      learningRate: 0.8
+      learningRateAnnealConst: 0.0
+      momentum: 0.9
+      gradientClip: 0.1
+      weightClip: 100.0
+      weightRegConst: 0.00005
+    - name: 'softmax'
+      type: 'map'
+      inputs: 'lstm'
+      activeFn: 'softmax'
+      outputDim: 431
+      initRange: 0.1
+      initSeed: 7
+      learningRate: 0.01
+      learningRateAnnealConst: 0.0
+      momentum: 0.9
+      gradientClip: 0.1
+      weightClip: 15.0
+      weightRegConst: 0.00005
