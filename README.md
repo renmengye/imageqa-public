@@ -60,10 +60,10 @@ and the target value. The input data is 3-d matrix, with first dimension to be
 number of example, second dimension to be time, third dimension to be feature. 
 The first time step is the image ID, and later the word ID. The target value is
 the answer class ID. The IDs dictionary can be found in qdict.pkl and 
-ansdict.pkl, which are python pickle files storing the dictionary object. So 
-to answer your previous questions, all unseen words in the test set are encoded
-as 'UNK' and has its own ID. Note that the word ID is 1-based, 0 is reserved 
-for empty word, which has a zero word embedding vector.
+ansdict.pkl, which are python pickle files storing the dictionary object. All 
+unseen words in the test set are encoded as 'UNK' and has its own ID. Note that
+the word ID is 1-based, 0 is reserved for empty word, which has a zero word 
+embedding vector.
 
 ## Training
 
