@@ -93,6 +93,7 @@ class LUT(Stage):
         if self.learningRate > 0.0:
             self.dEdW = np.zeros(self.W.shape, self.W.dtype)
             for n in range(0, X.shape[0]):
+             if X[n] != 0:
                 self.dEdW[X[n] - 1] += dEdY[n]
         if self.outputdEdX:
             return np.zeros(X.shape)
