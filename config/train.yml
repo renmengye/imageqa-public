@@ -9,4 +9,5 @@ stopCost: 0.01
 progress: true
 patience: 10
 criterion: loss
+needValid: true
 sendEmail: false
