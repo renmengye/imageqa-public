@@ -76,8 +76,8 @@ class LUT(Stage):
     def forward(self, X):
         if self.W is None: self.initWeights()
         if self.intConversion: X = X.astype(int)
-        self.X = X
         X = X.reshape(X.size)
+        self.X = X
         Y = np.zeros((X.shape[0], self.outputDim), self.W.dtype)
         for n in range(0, X.shape[0]):
             if self.sparse:
@@ -93,8 +93,8 @@ class LUT(Stage):
         if self.learningRate > 0.0:
             self.dEdW = np.zeros(self.W.shape, self.W.dtype)
             for n in range(0, X.shape[0]):
-             if X[n] != 0:
-                self.dEdW[X[n] - 1] += dEdY[n]
+                if X[n] != 0:
+                    self.dEdW[X[n] - 1] += dEdY[n]
         if self.outputdEdX:
             return np.zeros(X.shape)
         else:
